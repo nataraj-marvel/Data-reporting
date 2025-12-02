@@ -128,15 +128,27 @@ async function handlePut(
       updates.push('notes = ?');
       params.push(data.notes);
     }
+    if (data.start_time !== undefined) {
+      updates.push('start_time = ?');
+      params.push(data.start_time);
+    }
+    if (data.end_time !== undefined) {
+      updates.push('end_time = ?');
+      params.push(data.end_time);
+    }
+    if (data.task_id !== undefined) {
+      updates.push('task_id = ?');
+      params.push(data.task_id);
+    }
     if (data.status !== undefined) {
       updates.push('status = ?');
       params.push(data.status);
-      
+
       // Update submitted_at if status changed to submitted
       if (data.status === 'submitted' && report.status !== 'submitted') {
         updates.push('submitted_at = NOW()');
       }
-      
+
       // Update reviewed_at if status changed to reviewed (admin only)
       if (data.status === 'reviewed' && user.role === 'admin') {
         updates.push('reviewed_at = NOW()');

@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { query, execute } from '@/lib/db';
 import { requireAuth } from '@/lib/auth';
-import { Issue, IssueCreate, ApiResponse, AuthUser } from '@/types';
+import { Issue, IssueCreateEnhanced, ApiResponse, AuthUser } from '@/types';
 
 async function handler(
   req: NextApiRequest,
@@ -59,6 +59,7 @@ async function handleGet(
     });
   } catch (error) {
     console.error('Get issues error:', error);
+    console.error('Error details:', error);
     return res.status(500).json({
       success: false,
       error: 'Internal server error',
@@ -72,7 +73,7 @@ async function handlePost(
   user: AuthUser
 ) {
   try {
-    const data: IssueCreate = req.body;
+    const data: IssueCreateEnhanced = req.body;
 
     if (!data.report_id || !data.title || !data.description) {
       return res.status(400).json({
@@ -106,6 +107,7 @@ async function handlePost(
     });
   } catch (error) {
     console.error('Create issue error:', error);
+    console.error('Error details:', error);
     return res.status(500).json({
       success: false,
       error: 'Internal server error',

@@ -23,7 +23,7 @@ export async function verifyPassword(
 export function generateToken(user: AuthUser): string {
   return jwt.sign(
     {
-      id: user.id,
+      user_id: user.user_id,
       username: user.username,
       role: user.role,
     },
@@ -115,7 +115,7 @@ export async function createSession(
   );
 
   // Update last login
-  await execute('UPDATE users SET last_login = NOW() WHERE id = ?', [userId]);
+  await execute('UPDATE users SET last_login = NOW() WHERE user_id = ?', [userId]);
 }
 
 export async function deleteSession(token: string): Promise<void> {
@@ -154,3 +154,6 @@ export function requireAdmin(handler: Function) {
     return handler(req, res);
   };
 }
+
+// Alias for consistency with v2.0 API endpoints
+export const verifyAuth = authenticateRequest;

@@ -1,0 +1,129 @@
+═══════════════════════════════════════════════════════════════════
+  🤖 AI AGENT - HOW TO REPORT WORK (NO DUPLICATION)
+═══════════════════════════════════════════════════════════════════
+
+PROBLEM: Don't want to repeat same work in multiple reports
+
+SOLUTION: Use incremental reporting script
+
+═══════════════════════════════════════════════════════════════════
+
+📝 SIMPLE METHOD (Recommended)
+
+STEP 1: Edit your NEW work in the script
+        File: scripts/submit_incremental_report.cjs
+        
+        Change lines 99-115 with YOUR work:
+        
+        const newWork = {
+            work_description: `# What I JUST completed
+            
+        Details of NEW work only...`,
+            
+            hours_worked: 2.0,  // Only NEW hours
+            
+            tasks_completed: `1. New task 1
+        2. New task 2`,
+            
+            status: 'submitted'
+        };
+
+STEP 2: Run the script
+        node scripts/submit_incremental_report.cjs
+
+STEP 3: Done! Script automatically:
+        ✅ Checks if you reported today already
+        ✅ If YES → Updates existing report (appends new work)
+        ✅ If NO → Creates new report
+        ✅ No duplication!
+
+═══════════════════════════════════════════════════════════════════
+
+🎯 HOW IT WORKS
+
+Scenario 1: First Report of the Day
+  Last Report: Yesterday
+  Today: New day
+  → Creates NEW report for today ✓
+
+Scenario 2: Already Reported Today
+  Last Report: Today (same day)
+  You: Want to add more work
+  → UPDATES existing report (appends) ✓
+  → Adds hours: 2.5 + 1.5 = 4.0 ✓
+  → Appends new tasks ✓
+  → NO DUPLICATION! ✓
+
+═══════════════════════════════════════════════════════════════════
+
+📋 WHAT TO INCLUDE (Only NEW Work)
+
+work_description:
+  # What I completed in THIS session
+  
+  ## Task Name
+  Details...
+  
+  ## Files Modified
+  - file1.ts
+  - file2.tsx
+  
+  ## Results
+  ✅ What was achieved
+
+hours_worked:
+  Only hours for THIS session (e.g., 1.5)
+
+tasks_completed:
+  Only NEW tasks completed
+  1. Task one
+  2. Task two
+
+status:
+  "submitted" (always)
+
+═══════════════════════════════════════════════════════════════════
+
+✅ BENEFITS
+
+✓ No duplicate information
+✓ Accurate time tracking
+✓ Clean reports
+✓ Automatic date handling
+✓ Smart update logic
+✓ One script does everything
+
+═══════════════════════════════════════════════════════════════════
+
+🚀 QUICK REFERENCE
+
+Check last report:
+  GET /api/reports?limit=1
+
+Create new report:
+  POST /api/reports
+
+Update existing:
+  PUT /api/reports/{id}
+
+Smart script (does all above):
+  node scripts/submit_incremental_report.cjs
+
+═══════════════════════════════════════════════════════════════════
+
+📖 FULL DOCUMENTATION
+
+Simple Guide:    AGENT_QUICK_GUIDE.md
+Detailed Guide:  INCREMENTAL_REPORTING_GUIDE.md
+Full API Docs:   API_REPORT_SUBMISSION_GUIDE.md
+
+═══════════════════════════════════════════════════════════════════
+
+⚡ TLDR FOR AGENTS
+
+1. Edit: scripts/submit_incremental_report.cjs (your new work)
+2. Run:  node scripts/submit_incremental_report.cjs
+3. Done: Report in database, no duplication!
+
+═══════════════════════════════════════════════════════════════════
+

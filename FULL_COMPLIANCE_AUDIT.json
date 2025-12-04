@@ -1,0 +1,63 @@
+{
+  "timestamp": "2025-12-04T07:34:03.090Z",
+  "database": "nautilus_reporting",
+  "host": "103.108.220.47",
+  "tablesAudited": 8,
+  "totalIssues": 5,
+  "critical": 0,
+  "high": 5,
+  "issues": [
+    {
+      "table": "daily_reports",
+      "issue": "Missing column: issues_found",
+      "severity": "HIGH"
+    },
+    {
+      "table": "daily_reports",
+      "issue": "Missing column: issues_solved",
+      "severity": "HIGH"
+    },
+    {
+      "table": "issues",
+      "issue": "Missing column: resolution",
+      "severity": "HIGH"
+    },
+    {
+      "table": "problems_solved",
+      "issue": "Missing column: solution_type",
+      "severity": "HIGH"
+    },
+    {
+      "table": "problems_solved",
+      "issue": "Missing column: effectiveness",
+      "severity": "HIGH"
+    }
+  ],
+  "fixes": [
+    {
+      "table": "daily_reports",
+      "column": "issues_found",
+      "sql": "ALTER TABLE daily_reports ADD COLUMN issues_found TEXT NULL;"
+    },
+    {
+      "table": "daily_reports",
+      "column": "issues_solved",
+      "sql": "ALTER TABLE daily_reports ADD COLUMN issues_solved TEXT NULL;"
+    },
+    {
+      "table": "issues",
+      "column": "resolution",
+      "sql": "ALTER TABLE issues ADD COLUMN resolution TEXT NULL;"
+    },
+    {
+      "table": "problems_solved",
+      "column": "solution_type",
+      "sql": "ALTER TABLE problems_solved ADD COLUMN solution_type ENUM('fix','workaround','documentation','other') NULL;"
+    },
+    {
+      "table": "problems_solved",
+      "column": "effectiveness",
+      "sql": "ALTER TABLE problems_solved ADD COLUMN effectiveness ENUM('low','medium','high') NULL;"
+    }
+  ]
+}

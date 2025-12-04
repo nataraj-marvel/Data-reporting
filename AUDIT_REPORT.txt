@@ -1,0 +1,208 @@
+
+📊 COMPREHENSIVE SYSTEM AUDIT
+   ════════════════════════════════════════════════════════════
+✅ Connected to database
+   
+
+📊 STEP 1: AUDITING ALL TABLES
+   ════════════════════════════════════════════════════════════
+   Found 15 tables
+   
+   Analyzing: activity_log
+✅    Primary Key: id
+      Rows: 0
+   Analyzing: ai_prompts
+✅    Primary Key: prompt_id
+      Rows: 2
+   Analyzing: daily_reports
+✅    Primary Key: report_id
+      Rows: 7
+   Analyzing: data_uploads
+✅    Primary Key: upload_id
+      Rows: 0
+   Analyzing: file_versions
+✅    Primary Key: file_version_id
+      Rows: 0
+   Analyzing: issues
+✅    Primary Key: issue_id
+      Rows: 0
+   Analyzing: problems_solved
+✅    Primary Key: solution_id
+      Rows: 0
+   Analyzing: prompt_files
+✅    Primary Key: id
+      Rows: 0
+   Analyzing: requests
+✅    Primary Key: request_id
+      Rows: 1
+   Analyzing: sessions
+✅    Primary Key: session_id
+      Rows: 30
+   Analyzing: system_version
+✅    Primary Key: id
+      Rows: 1
+   Analyzing: task_files
+✅    Primary Key: id
+      Rows: 0
+   Analyzing: tasks
+✅    Primary Key: task_id
+      Rows: 3
+   Analyzing: tasks_old
+✅    Primary Key: id
+      Rows: 2
+   Analyzing: users
+✅    Primary Key: user_id
+      Rows: 5
+   
+
+📊 STEP 2: CHECKING FOREIGN KEY INTEGRITY
+   ════════════════════════════════════════════════════════════
+   Found 35 foreign key relationships
+   
+   activity_log.user_id → users.user_id
+✅    ✓ Integrity OK
+   ai_prompts.user_id → users.user_id
+✅    ✓ Integrity OK
+   ai_prompts.report_id → daily_reports.report_id
+✅    ✓ Integrity OK
+   daily_reports.reviewed_by → users.user_id
+✅    ✓ Integrity OK
+   daily_reports.user_id → users.user_id
+✅    ✓ Integrity OK
+   daily_reports.task_id → tasks_old.id
+✅    ✓ Integrity OK
+   data_uploads.user_id → users.user_id
+✅    ✓ Integrity OK
+   data_uploads.user_id → users.user_id
+✅    ✓ Integrity OK
+   file_versions.user_id → users.user_id
+✅    ✓ Integrity OK
+   file_versions.report_id → daily_reports.report_id
+✅    ✓ Integrity OK
+   file_versions.solution_id → problems_solved.solution_id
+✅    ✓ Integrity OK
+   file_versions.previous_version_id → file_versions.file_version_id
+✅    ✓ Integrity OK
+   issues.prompt_id → ai_prompts.prompt_id
+✅    ✓ Integrity OK
+   issues.user_id → users.user_id
+✅    ✓ Integrity OK
+   issues.user_id → users.user_id
+✅    ✓ Integrity OK
+   problems_solved.user_id → users.user_id
+✅    ✓ Integrity OK
+   problems_solved.related_prompt_id → ai_prompts.prompt_id
+✅    ✓ Integrity OK
+   problems_solved.user_id → users.user_id
+✅    ✓ Integrity OK
+   problems_solved.issue_id → issues.issue_id
+✅    ✓ Integrity OK
+   prompt_files.file_version_id → file_versions.file_version_id
+✅    ✓ Integrity OK
+   prompt_files.prompt_id → ai_prompts.prompt_id
+✅    ✓ Integrity OK
+   requests.user_id → users.user_id
+✅    ✓ Integrity OK
+   requests.report_id → daily_reports.report_id
+✅    ✓ Integrity OK
+   requests.assigned_to → users.user_id
+✅    ✓ Integrity OK
+   sessions.user_id → users.user_id
+✅    ✓ Integrity OK
+   tasks.assigned_to → users.user_id
+✅    ✓ Integrity OK
+   tasks.parent_task_id → tasks.task_id
+✅    ✓ Integrity OK
+   tasks.prompt_id → ai_prompts.prompt_id
+✅    ✓ Integrity OK
+   tasks.request_id → requests.request_id
+✅    ✓ Integrity OK
+   tasks.user_id → users.user_id
+✅    ✓ Integrity OK
+   tasks.report_id → daily_reports.report_id
+✅    ✓ Integrity OK
+   tasks.issue_id → issues.issue_id
+✅    ✓ Integrity OK
+   tasks_old.assigned_to → users.user_id
+✅    ✓ Integrity OK
+   tasks_old.assigned_by → users.user_id
+✅    ✓ Integrity OK
+   task_files.file_version_id → file_versions.file_version_id
+✅    ✓ Integrity OK
+   
+
+📊 STEP 3: CHECKING VIEWS
+   ════════════════════════════════════════════════════════════
+   Found 4 views
+      v_file_activity
+✅       ✓ View works (0 columns)
+      v_prompt_activity
+✅       ✓ View works (9 columns)
+      v_request_pipeline
+✅       ✓ View works (15 columns)
+      v_task_dashboard
+✅       ✓ View works (19 columns)
+   
+
+📊 STEP 4: API vs DATABASE SCHEMA VALIDATION
+   ════════════════════════════════════════════════════════════
+   users:
+✅    ✓ Primary key correct: user_id
+✅    ✓ All required columns present
+   daily_reports:
+✅    ✓ Primary key correct: report_id
+✅    ✓ All required columns present
+   tasks:
+✅    ✓ Primary key correct: task_id
+✅    ✓ All required columns present
+   issues:
+✅    ✓ Primary key correct: issue_id
+✅    ✓ All required columns present
+   problems_solved:
+✅    ✓ Primary key correct: solution_id
+✅    ✓ All required columns present
+   requests:
+✅    ✓ Primary key correct: request_id
+✅    ✓ All required columns present
+   ai_prompts:
+✅    ✓ Primary key correct: prompt_id
+✅    ✓ All required columns present
+   file_versions:
+❌    ❌ PK mismatch: got 'file_version_id', expected 'file_id'
+❌    ❌ Missing columns: file_name
+   sessions:
+✅    ✓ Primary key correct: session_id
+✅    ✓ All required columns present
+   
+
+📊 STEP 5: CHECKING INDEXES
+   ════════════════════════════════════════════════════════════
+   activity_log: 6 indexes
+   ai_prompts: 5 indexes
+   daily_reports: 9 indexes
+   data_uploads: 2 indexes
+   file_versions: 10 indexes
+   issues: 8 indexes
+   problems_solved: 4 indexes
+   prompt_files: 4 indexes
+   requests: 6 indexes
+   sessions: 3 indexes
+   system_version: 1 indexes
+   tasks: 11 indexes
+   tasks_old: 3 indexes
+   task_files: 4 indexes
+   users: 5 indexes
+   
+
+📊 AUDIT SUMMARY
+   ════════════════════════════════════════════════════════════
+   
+   Total Tables: 15
+   Total Views: 4
+   Foreign Keys: 35
+   Total Indexes: 81
+   
+❌ ISSUES FOUND:
+   
+   ❌ file_versions: Primary key is 'file_version_id' but expected 'file_id'
+   ❌ file_versions: Missing columns: file_name

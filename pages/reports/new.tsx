@@ -109,7 +109,7 @@ export default function NewReport() {
                             <select value={taskId} onChange={e => setTaskId(e.target.value)}>
                                 <option value="">-- Select Task --</option>
                                 {tasks.map(t => (
-                                    <option key={t.id} value={t.id}>{t.title} ({t.status})</option>
+                                    <option key={t.task_id} value={t.task_id}>{t.title} ({t.status})</option>
                                 ))}
                             </select>
                         </div>

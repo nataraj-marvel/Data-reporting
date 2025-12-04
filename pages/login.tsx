@@ -1,5 +1,6 @@
 import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 export default function Login() {
   const router = useRouter();
@@ -40,12 +41,41 @@ export default function Login() {
       display: 'flex', 
       alignItems: 'center', 
       justifyContent: 'center',
-      background: '#f5f5f5'
+      position: 'relative'
     }}>
-      <div className="card" style={{ width: '100%', maxWidth: '400px' }}>
-        <h1 style={{ marginBottom: '20px', textAlign: 'center' }}>
-          Nautilus Reporting System
-        </h1>
+      <div className="card" style={{ width: '100%', maxWidth: '450px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '30px' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+            <Image 
+              src="/logo.png" 
+              alt="MarvelQuant Logo" 
+              width={80} 
+              height={80}
+              style={{ objectFit: 'contain' }}
+            />
+          </div>
+          <h1 style={{ 
+            margin: '0 0 10px 0', 
+            fontSize: '32px',
+            fontWeight: '700',
+            background: 'linear-gradient(135deg, #00d4ff 0%, #06b6d4 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            letterSpacing: '-0.5px'
+          }}>
+            MarvelQuant
+          </h1>
+          <p style={{ 
+            margin: 0, 
+            color: '#94a3b8', 
+            fontSize: '14px',
+            textTransform: 'uppercase',
+            letterSpacing: '2px',
+            fontWeight: '600'
+          }}>
+            Reporting System
+          </p>
+        </div>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="username">Username</label>
@@ -79,11 +109,18 @@ export default function Login() {
             {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
-        <div style={{ marginTop: '20px', fontSize: '14px', color: '#666', textAlign: 'center' }}>
-          <p>Default credentials:</p>
-          <p><strong>Username:</strong> admin</p>
-          <p><strong>Password:</strong> admin123</p>
-          <p style={{ marginTop: '10px', fontSize: '12px' }}>
+        <div style={{ 
+          marginTop: '30px', 
+          padding: '20px', 
+          background: 'rgba(0, 212, 255, 0.05)', 
+          borderRadius: '8px', 
+          border: '1px solid rgba(0, 212, 255, 0.2)',
+          textAlign: 'center' 
+        }}>
+          <p style={{ margin: '0 0 10px 0', fontSize: '12px', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: '600' }}>Default Credentials</p>
+          <p style={{ margin: '5px 0', fontSize: '14px', color: '#e3f2fd' }}><strong style={{ color: '#00d4ff' }}>Username:</strong> admin</p>
+          <p style={{ margin: '5px 0', fontSize: '14px', color: '#e3f2fd' }}><strong style={{ color: '#00d4ff' }}>Password:</strong> admin123</p>
+          <p style={{ marginTop: '10px', fontSize: '11px', color: '#64748b' }}>
             (Change password after first login)
           </p>
         </div>

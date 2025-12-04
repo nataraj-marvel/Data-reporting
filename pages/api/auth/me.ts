@@ -23,7 +23,7 @@ export default async function handler(
 
     // Get full user details
     const user = await queryOne<User>(
-      'SELECT id, username, role, full_name, email, created_at, updated_at, last_login, is_active FROM users WHERE id = ?',
+      'SELECT user_id, username, role, full_name, email, created_at, updated_at, last_login, is_active FROM users WHERE user_id = ?',
       [authUser.id]
     );
 

@@ -1,0 +1,22 @@
+{
+  "timestamp": "2025-12-04T07:07:24.827Z",
+  "database": "nautilus_reporting",
+  "host": "103.108.220.47",
+  "totalIssues": 2,
+  "critical": 1,
+  "warnings": 1,
+  "issues": [
+    {
+      "table": "file_versions",
+      "issue": "Wrong PK: has \"file_id\", needs \"file_version_id\"",
+      "severity": "CRITICAL",
+      "fix": "ALTER TABLE file_versions CHANGE file_id file_version_id INT(11) AUTO_INCREMENT"
+    },
+    {
+      "table": "file_versions",
+      "issue": "Missing column: file_version_id",
+      "severity": "WARNING",
+      "fix": "ADD COLUMN file_version_id (type needs to be determined)"
+    }
+  ]
+}

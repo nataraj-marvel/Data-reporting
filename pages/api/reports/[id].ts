@@ -33,7 +33,7 @@ async function handleGet(
 ) {
   try {
     const report = await queryOne<DailyReport>(
-      'SELECT * FROM daily_reports WHERE id = ?',
+      'SELECT * FROM daily_reports WHERE report_id = ?',
       [reportId]
     );
 
@@ -45,7 +45,7 @@ async function handleGet(
     }
 
     // Check permissions
-    if (user.role === 'programmer' && report.user_id !== user.id) {
+    if (user.role === 'programmer' && report.user_id !== user.user_id) {
       return res.status(403).json({
         success: false,
         error: 'Forbidden',
@@ -85,7 +85,7 @@ async function handlePut(
 ) {
   try {
     const report = await queryOne<DailyReport>(
-      'SELECT * FROM daily_reports WHERE id = ?',
+      'SELECT * FROM daily_reports WHERE report_id = ?',
       [reportId]
     );
 
@@ -97,7 +97,7 @@ async function handlePut(
     }
 
     // Check permissions
-    if (user.role === 'programmer' && report.user_id !== user.id) {
+    if (user.role === 'programmer' && report.user_id !== user.user_id) {
       return res.status(403).json({
         success: false,
         error: 'Forbidden',
@@ -153,7 +153,7 @@ async function handlePut(
       if (data.status === 'reviewed' && user.role === 'admin') {
         updates.push('reviewed_at = NOW()');
         updates.push('reviewed_by = ?');
-        params.push(user.id);
+        params.push(user.user_id);
       }
     }
 
@@ -166,12 +166,12 @@ async function handlePut(
 
     params.push(reportId);
     await execute(
-      `UPDATE daily_reports SET ${updates.join(', ')} WHERE id = ?`,
+      `UPDATE daily_reports SET ${updates.join(', ')} WHERE report_id = ?`,
       params
     );
 
     const updatedReport = await queryOne<DailyReport>(
-      'SELECT * FROM daily_reports WHERE id = ?',
+      'SELECT * FROM daily_reports WHERE report_id = ?',
       [reportId]
     );
 
@@ -197,7 +197,7 @@ async function handleDelete(
 ) {
   try {
     const report = await queryOne<DailyReport>(
-      'SELECT * FROM daily_reports WHERE id = ?',
+      'SELECT * FROM daily_reports WHERE report_id = ?',
       [reportId]
     );
 
@@ -209,7 +209,7 @@ async function handleDelete(
     }
 
     // Check permissions
-    if (user.role === 'programmer' && report.user_id !== user.id) {
+    if (user.role === 'programmer' && report.user_id !== user.user_id) {
       return res.status(403).json({
         success: false,
         error: 'Forbidden',
@@ -224,7 +224,7 @@ async function handleDelete(
       });
     }
 
-    await execute('DELETE FROM daily_reports WHERE id = ?', [reportId]);
+    await execute('DELETE FROM daily_reports WHERE report_id = ?', [reportId]);
 
     return res.status(200).json({
       success: true,

@@ -24,7 +24,7 @@ async function handleGet(
   try {
     const { role, is_active } = req.query;
 
-    let sql = 'SELECT id, username, role, full_name, email, created_at, updated_at, last_login, is_active FROM users WHERE 1=1';
+    let sql = 'SELECT user_id, username, role, full_name, email, created_at, updated_at, last_login, is_active FROM users WHERE 1=1';
     const params: any[] = [];
 
     if (role) {
@@ -97,7 +97,7 @@ async function handlePost(
     );
 
     const newUser = await query<User>(
-      'SELECT id, username, role, full_name, email, created_at, updated_at, last_login, is_active FROM users WHERE id = ?',
+      'SELECT user_id, username, role, full_name, email, created_at, updated_at, last_login, is_active FROM users WHERE id = ?',
       [result.insertId]
     );
 

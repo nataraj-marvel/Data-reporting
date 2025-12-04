@@ -1,5 +1,6 @@
 // components/Navbar.tsx
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
@@ -34,79 +35,213 @@ export default function Navbar() {
         <nav className="navbar">
             <div className="container">
                 <div className="brand">
-                    <Link href="/reports">Nautilus Reporting</Link>
+                    <Link href="/reports">
+                        <Image 
+                            src="/logo.png" 
+                            alt="MarvelQuant Logo" 
+                            width={45} 
+                            height={45}
+                            style={{ objectFit: 'contain' }}
+                            className="logo-only"
+                        />
+                    </Link>
                 </div>
                 <div className="links">
                     <Link href="/reports" className={router.pathname === '/reports' ? 'active' : ''}>
-                        Reports
+                        <span className="nav-icon">📊</span>
+                        <span>Reports</span>
                     </Link>
                     <Link href="/tasks" className={router.pathname.startsWith('/tasks') ? 'active' : ''}>
-                        Tasks
+                        <span className="nav-icon">✓</span>
+                        <span>Tasks</span>
                     </Link>
-                    <Link href="/reports/new" className={router.pathname === '/reports/new' ? 'active' : ''}>
-                        + New Report
+                    <Link href="/prompts" className={router.pathname.startsWith('/prompts') ? 'active' : ''}>
+                        <span className="nav-icon">🤖</span>
+                        <span>AI Prompts</span>
+                    </Link>
+                    <Link href="/requests" className={router.pathname.startsWith('/requests') ? 'active' : ''}>
+                        <span className="nav-icon">📋</span>
+                        <span>Requests</span>
+                    </Link>
+                    <Link href="/files" className={router.pathname.startsWith('/files') ? 'active' : ''}>
+                        <span className="nav-icon">📁</span>
+                        <span>Files</span>
                     </Link>
                 </div>
                 <div className="user-actions">
-                    <button onClick={handleLogout} className="logout-btn">Logout</button>
+                    <Link href="/reports/new" className="new-report-btn">
+                        <span className="btn-icon">+</span>
+                        <span>New Report</span>
+                    </Link>
+                    <button onClick={handleLogout} className="logout-btn">
+                        <span className="btn-icon">⏻</span>
+                        <span>Logout</span>
+                    </button>
                 </div>
             </div>
             <style jsx>{`
         .navbar {
-          background: white;
-          border-bottom: 1px solid #eaeaea;
-          padding: 15px 0;
-          box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+          background: linear-gradient(135deg, rgba(10, 25, 41, 0.95) 0%, rgba(15, 41, 66, 0.95) 100%);
+          backdrop-filter: blur(20px);
+          border-bottom: 2px solid rgba(0, 212, 255, 0.3);
+          padding: 12px 0;
+          box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 212, 255, 0.1);
           position: sticky;
           top: 0;
           z-index: 100;
         }
         .container {
-          max-width: 1200px;
+          max-width: 1600px;
           margin: 0 auto;
-          padding: 0 20px;
+          padding: 0 40px;
           display: flex;
           justify-content: space-between;
           align-items: center;
+          gap: 30px;
+        }
+        .brand {
+          flex-shrink: 0;
         }
         .brand a {
-          font-weight: 700;
-          font-size: 1.2rem;
-          color: #333;
-          text-decoration: none;
+          display: flex;
+          align-items: center;
+          transition: all 0.3s ease;
+          padding: 5px;
+          border-radius: 8px;
+        }
+        .brand a:hover {
+          background: rgba(0, 212, 255, 0.1);
+          transform: scale(1.05);
+        }
+        .logo-only {
+          filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.3));
+          transition: all 0.3s ease;
+        }
+        .logo-only:hover {
+          filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.6));
         }
         .links {
           display: flex;
-          gap: 20px;
+          gap: 8px;
+          flex: 1;
+          justify-content: center;
         }
         .links a {
-          color: #666;
+          color: #cbd5e1;
           text-decoration: none;
-          font-weight: 500;
-          padding: 5px 10px;
-          border-radius: 6px;
-          transition: all 0.2s;
+          font-weight: 600;
+          padding: 10px 20px;
+          border-radius: 10px;
+          transition: all 0.3s ease;
+          font-size: 13px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          border: 1px solid transparent;
+          background: rgba(15, 41, 66, 0.4);
+          letter-spacing: 0.3px;
+        }
+        .nav-icon {
+          font-size: 16px;
+          transition: transform 0.3s ease;
         }
         .links a:hover {
-          background: #f5f5f5;
-          color: #333;
+          background: rgba(0, 212, 255, 0.15);
+          color: #00d4ff;
+          border-color: rgba(0, 212, 255, 0.4);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0, 212, 255, 0.2);
+        }
+        .links a:hover .nav-icon {
+          transform: scale(1.2);
         }
         .links a.active {
-          background: #e3f2fd;
-          color: #0066ff;
+          background: linear-gradient(135deg, rgba(0, 212, 255, 0.2) 0%, rgba(6, 182, 212, 0.2) 100%);
+          color: #00d4ff;
+          border: 1px solid rgba(0, 212, 255, 0.5);
+          box-shadow: 0 0 20px rgba(0, 212, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+        .user-actions {
+          display: flex;
+          gap: 10px;
+          flex-shrink: 0;
+        }
+        .new-report-btn {
+          background: linear-gradient(135deg, #00d4ff 0%, #06b6d4 100%);
+          border: 1px solid rgba(0, 212, 255, 0.5);
+          padding: 10px 20px;
+          border-radius: 10px;
+          cursor: pointer;
+          color: #0a1929;
+          font-size: 13px;
+          font-weight: 700;
+          transition: all 0.3s ease;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          text-decoration: none;
+          letter-spacing: 0.5px;
+          box-shadow: 0 4px 12px rgba(0, 212, 255, 0.4);
+        }
+        .new-report-btn:hover {
+          background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+          box-shadow: 0 6px 20px rgba(0, 212, 255, 0.6);
+          transform: translateY(-2px);
+        }
+        .btn-icon {
+          font-size: 18px;
+          font-weight: bold;
+          line-height: 1;
         }
         .logout-btn {
-          background: transparent;
-          border: 1px solid #ddd;
-          padding: 6px 12px;
-          border-radius: 6px;
+          background: rgba(239, 68, 68, 0.15);
+          border: 1px solid rgba(239, 68, 68, 0.4);
+          padding: 10px 20px;
+          border-radius: 10px;
           cursor: pointer;
-          color: #666;
-          font-size: 0.9rem;
+          color: #f87171;
+          font-size: 13px;
+          font-weight: 700;
+          transition: all 0.3s ease;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          letter-spacing: 0.5px;
         }
         .logout-btn:hover {
-          background: #f5f5f5;
-          color: #333;
+          background: rgba(239, 68, 68, 0.3);
+          border-color: rgba(239, 68, 68, 0.6);
+          box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+          transform: translateY(-2px);
+          color: #ef4444;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+          .links a span:last-child {
+            display: none;
+          }
+          .links a {
+            padding: 10px;
+          }
+          .nav-icon {
+            font-size: 20px;
+          }
+        }
+        
+        @media (max-width: 768px) {
+          .container {
+            padding: 0 20px;
+            gap: 15px;
+          }
+          .new-report-btn span:last-child,
+          .logout-btn span:last-child {
+            display: none;
+          }
+          .new-report-btn,
+          .logout-btn {
+            padding: 10px 14px;
+          }
         }
       `}</style>
         </nav>

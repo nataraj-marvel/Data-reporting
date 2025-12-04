@@ -4,6 +4,10 @@ let pool: mysql.Pool | null = null;
 
 export function getPool(): mysql.Pool {
   if (!pool) {
+    console.log('[DB] Creating new connection pool...');
+    console.log('[DB] Host:', process.env.DB_HOST);
+    console.log('[DB] Port:', process.env.DB_PORT);
+    console.log('[DB] Database:', process.env.DB_NAME);
     pool = mysql.createPool({
       host: process.env.DB_HOST || 'localhost',
       port: parseInt(process.env.DB_PORT || '3306'),
@@ -11,8 +15,10 @@ export function getPool(): mysql.Pool {
       password: process.env.DB_PASSWORD || '',
       database: process.env.DB_NAME || 'nautilus_reporting',
       waitForConnections: true,
-      connectionLimit: 10,
+      connectionLimit: 5, // Reduced from 10 to prevent connection exhaustion
       queueLimit: 0,
+      maxIdle: 5, // Maximum idle connections
+      idleTimeout: 60000, // Close idle connections after 60 seconds
       enableKeepAlive: true,
       keepAliveInitialDelay: 0,
     });

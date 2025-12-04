@@ -32,7 +32,7 @@ async function handleGet(
 ) {
   try {
     const user = await queryOne<User>(
-      'SELECT id, username, role, full_name, email, created_at, updated_at, last_login, is_active FROM users WHERE id = ?',
+      'SELECT user_id, username, role, full_name, email, created_at, updated_at, last_login, is_active FROM users WHERE user_id = ?',
       [userId]
     );
 
@@ -54,7 +54,7 @@ async function handlePut(
 ) {
   try {
     const user = await queryOne<User>(
-      'SELECT id FROM users WHERE id = ?',
+      'SELECT user_id FROM users WHERE user_id = ?',
       [userId]
     );
 
@@ -93,10 +93,10 @@ async function handlePut(
     }
 
     params.push(userId);
-    await execute(`UPDATE users SET ${updates.join(', ')} WHERE id = ?`, params);
+    await execute(`UPDATE users SET ${updates.join(', ')} WHERE user_id = ?`, params);
 
     const updatedUser = await queryOne<User>(
-      'SELECT id, username, role, full_name, email, created_at, updated_at, last_login, is_active FROM users WHERE id = ?',
+      'SELECT user_id, username, role, full_name, email, created_at, updated_at, last_login, is_active FROM users WHERE user_id = ?',
       [userId]
     );
 
@@ -117,7 +117,7 @@ async function handleDelete(
 ) {
   try {
     const user = await queryOne<User>(
-      'SELECT id FROM users WHERE id = ?',
+      'SELECT user_id FROM users WHERE user_id = ?',
       [userId]
     );
 
@@ -125,7 +125,7 @@ async function handleDelete(
       return res.status(404).json({ success: false, error: 'User not found' });
     }
 
-    await execute('DELETE FROM users WHERE id = ?', [userId]);
+    await execute('DELETE FROM users WHERE user_id = ?', [userId]);
 
     return res.status(200).json({
       success: true,

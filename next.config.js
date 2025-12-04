@@ -7,8 +7,8 @@ const nextConfig = {
     DB_USER: process.env.DB_USER || 'root',
     DB_PASSWORD: process.env.DB_PASSWORD || '',
     DB_NAME: process.env.DB_NAME || 'nautilus_reporting',
-    JWT_SECRET: process.env.JWT_SECRET || 'your-secret-key-change-in-production',
+    JWT_SECRET: process.env.JWT_SECRET || '9f8b1c2d3e4f5g6h7i8j9k0l!@#QWEasdZXC123',
   },
 }
 
-module.exports = nextConfig
+export default nextConfig;

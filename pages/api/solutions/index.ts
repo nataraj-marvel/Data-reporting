@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { query, execute } from '@/lib/db';
 import { requireAuth } from '@/lib/auth';
-import { ProblemSolved, ProblemSolvedCreate, ApiResponse, AuthUser } from '@/types';
+import { ProblemSolved, ProblemSolvedCreateEnhanced, ApiResponse, AuthUser } from '@/types';
 
 async function handler(
   req: NextApiRequest,
@@ -67,7 +67,7 @@ async function handlePost(
   user: AuthUser
 ) {
   try {
-    const data: ProblemSolvedCreate = req.body;
+    const data: ProblemSolvedCreateEnhanced = req.body;
 
     if (!data.report_id || !data.title || !data.problem_description || !data.solution_description) {
       return res.status(400).json({

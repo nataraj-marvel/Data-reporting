@@ -1,0 +1,33 @@
+═══════════════════════════════════════════════════════════════════
+  ⚠️  SERVER RESTART REQUIRED
+═══════════════════════════════════════════════════════════════════
+
+TO FIX TASK VIEW/EDIT/CREATE ERRORS:
+
+1. Go to Terminal 5 (where npm run dev is running)
+
+2. Press: Ctrl+C
+
+3. Run: npm run dev
+
+4. Login: admin / admin123
+
+5. Test: http://localhost:3000/tasks
+
+═══════════════════════════════════════════════════════════════════
+
+REASON: 
+Environment variables (.env.local) were updated but server needs 
+restart to reload them.
+
+WHAT WAS FIXED:
+✅ Remote database admin password fixed
+✅ All AUTO_INCREMENT issues resolved
+✅ Environment configured for local database
+
+CURRENT:
+- Server still using old connection (remote DB)
+- After restart: Will use local DB (localhost)
+
+═══════════════════════════════════════════════════════════════════
+

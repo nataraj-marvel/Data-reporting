@@ -34,10 +34,9 @@ async function handleGet(
     } = req.query;
 
     let sql = `
-      SELECT r.*, t.title as task_title, u.full_name 
+      SELECT r.*, u.full_name 
       FROM daily_reports r
-      LEFT JOIN tasks t ON r.task_id = t.id
-      LEFT JOIN users u ON r.user_id = u.id
+      LEFT JOIN users u ON r.user_id = u.user_id
       WHERE 1=1
     `;
     const params: any[] = [];
@@ -45,7 +44,7 @@ async function handleGet(
     // Filter by user (programmers can only see their own reports)
     if (user.role === 'programmer') {
       sql += ' AND r.user_id = ?';
-      params.push(user.id);
+      params.push(user.user_id);
     } else if (user_id) {
       sql += ' AND r.user_id = ?';
       params.push(user_id);
@@ -68,7 +67,7 @@ async function handleGet(
     }
 
     // Count total
-    const countSql = sql.replace('SELECT r.*, t.title as task_title, u.full_name', 'SELECT COUNT(*) as total');
+    const countSql = sql.replace('SELECT r.*, u.full_name', 'SELECT COUNT(*) as total');
     const countResult = await query<{ total: number }>(countSql, params);
     const total = countResult[0]?.total || 0;
 
@@ -124,7 +123,7 @@ async function handlePost(
        (user_id, report_date, start_time, end_time, task_id, work_description, hours_worked, tasks_completed, blockers, notes, status, submitted_at)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
-        user.id,
+        user.user_id,
         data.report_date,
         data.start_time || null,
         data.end_time || null,
@@ -140,7 +139,7 @@ async function handlePost(
     );
 
     const newReport = await query<DailyReport>(
-      'SELECT * FROM daily_reports WHERE id = ?',
+      'SELECT * FROM daily_reports WHERE report_id = ?',
       [result.insertId]
     );
 
